@@ -49,7 +49,7 @@ public class FavoritesVFS extends VFS
 	{
 		super("favorites",DELETE_CAP | RENAME_CAP | LOW_LATENCY_CAP
 			| NON_AWT_SESSION_CAP,
-			new String[] { EA_TYPE });
+			new String[] { EA_PATH, EA_TYPE });
 
 		/* addToFavorites(), which is a static method
 		 * (for convinience) needs an instance of the
@@ -139,7 +139,7 @@ public class FavoritesVFS extends VFS
 	{
 		synchronized(lock)
 		{
-			favorites = new LinkedList<Favorite>();
+			favorites = new LinkedList<>();
 
 			String favoritePath;
 			int i = 0;

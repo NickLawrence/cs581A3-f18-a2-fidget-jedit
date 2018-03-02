@@ -46,12 +46,14 @@ import java.util.regex.PatternSyntaxException;
 public class RecentFilesProvider implements DynamicMenuProvider
 {
 	//{{{ updateEveryTime() method
+	@Override
 	public boolean updateEveryTime()
 	{
 		return false;
 	} //}}}
 
 	//{{{ update() method
+	@Override
 	public void update(JMenu menu)
 	{
 		final View view = GUIUtilities.getView(menu);
@@ -59,6 +61,7 @@ public class RecentFilesProvider implements DynamicMenuProvider
 		//{{{ ActionListener...
 		ActionListener actionListener = new ActionListener()
 		{
+			@Override
 			public void actionPerformed(ActionEvent evt)
 			{
 				jEdit.openFile(view,evt.getActionCommand());
@@ -69,6 +72,7 @@ public class RecentFilesProvider implements DynamicMenuProvider
 		//{{{ ChangeListener...
 		ChangeListener changeListener = new ChangeListener()
 		{
+			@Override
 			public void stateChanged(ChangeEvent e)
 			{
 				JMenuItem menuItem = (JMenuItem) e.getSource();
@@ -88,13 +92,14 @@ public class RecentFilesProvider implements DynamicMenuProvider
 			return;
 		}
 
-		final List<JMenuItem> menuItems = new ArrayList<JMenuItem>();
+		final List<JMenuItem> menuItems = new ArrayList<>();
 		final JTextField text = new JTextField();
 		text.setToolTipText(jEdit.getProperty("recent-files.textfield.tooltip") +
 			": " + jEdit.getProperty("glob.tooltip"));
 		menu.add(text);
 		text.addKeyListener(new KeyAdapter()
 		{
+			@Override
 			public void keyReleased(KeyEvent e)
 			{
 				String typedText = text.getText();
@@ -106,7 +111,7 @@ public class RecentFilesProvider implements DynamicMenuProvider
 					if ((! typedText.contains("*")) && (! typedText.contains("?")))
 					{
 						// Old style (before jEdit 4.3pre18): Match start of file name
-						regex = regex + "*";
+						regex = "*" + regex + "*";
 					}
 					pattern = Pattern.compile(StandardUtilities.globToRE(regex),
 						Pattern.CASE_INSENSITIVE);
@@ -182,6 +187,7 @@ public class RecentFilesProvider implements DynamicMenuProvider
 		JMenuItem menuItem = new JMenuItem(jEdit.getProperty("clear-recent-files.label"));
 		menuItem.addActionListener(new ActionListener()
 		{
+			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 				BufferHistory.clear();

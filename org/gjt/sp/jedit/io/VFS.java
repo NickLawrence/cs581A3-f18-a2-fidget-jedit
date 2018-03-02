@@ -181,6 +181,12 @@ public abstract class VFS
 
 	//{{{ Extended attributes
 	/**
+	 * File path
+	 * @since jEdit 5.05
+	 */
+	public static final String EA_PATH = "path";
+	
+	/**
 	 * File type.
 	 * @since jEdit 4.2pre1
 	 */
@@ -643,8 +649,8 @@ public abstract class VFS
 		}
 		finally
 		{
-			IOUtilities.closeQuietly((Closeable)in);
-			IOUtilities.closeQuietly((Closeable)out);
+			IOUtilities.closeQuietly(in);
+			IOUtilities.closeQuietly(out);
 		}
 	}
 
@@ -845,7 +851,7 @@ public abstract class VFS
 		boolean skipBinary, boolean skipHidden)
 		throws IOException
 	{
-		List<String> files = new ArrayList<String>(100);
+		List<String> files = new ArrayList<>(100);
 
 		listFiles(session,new HashSet<String>(), files,directory,filter,
 			recursive, comp, skipBinary, skipHidden);
@@ -1148,6 +1154,7 @@ public abstract class VFS
 			this.sortIgnoreCase = sortIgnoreCase;
 		}
 
+		@Override
 		public int compare(VFSFile file1, VFSFile file2)
 		{
 			if(!sortMixFilesAndDirs)
@@ -1173,6 +1180,7 @@ public abstract class VFS
 	{
 		EditBus.addToBus(new EBComponent()
 		{
+			@Override
 			public void handleMessage(EBMessage msg)
 			{
 				if(msg instanceof PropertiesChanged)
@@ -1266,7 +1274,7 @@ public abstract class VFS
 	{
 		synchronized(lock)
 		{
-			colors = new ArrayList<ColorEntry>();
+			colors = new ArrayList<>();
 
 			if(!jEdit.getBooleanProperty("vfs.browser.colorize"))
 				return;
@@ -1320,6 +1328,7 @@ public abstract class VFS
 		private String path;
 		private Component comp;
 
+		@Override
 		public void run()
 		{
 			session = createVFSSession(path, comp);

@@ -25,18 +25,20 @@ package org.gjt.sp.jedit.io;
 
 //{{{ Imports
 import java.awt.Color;
-import java.io.*;
-import java.io.Closeable;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
 
-import org.gjt.sp.jedit.*;
-import org.gjt.sp.jedit.browser.VFSBrowser;
-import org.gjt.sp.jedit.browser.FileCellRenderer;
-import org.gjt.sp.util.Log;
-import org.gjt.sp.util.IOUtilities;
-import org.gjt.sp.util.StandardUtilities;
-
-import javax.swing.*;
 //}}}
+import javax.swing.Icon;
+
+import org.gjt.sp.jedit.MiscUtilities;
+import org.gjt.sp.jedit.jEdit;
+import org.gjt.sp.jedit.browser.FileCellRenderer;
+import org.gjt.sp.jedit.browser.VFSBrowser;
+import org.gjt.sp.util.IOUtilities;
+import org.gjt.sp.util.Log;
+import org.gjt.sp.util.StandardUtilities;
 
 /**
  * A directory entry returned from a file listing.
@@ -293,7 +295,7 @@ public class VFSFile implements Serializable
 		}
 		finally
 		{
-			IOUtilities.closeQuietly((Closeable)in);
+			IOUtilities.closeQuietly(in);
 		}
 	} //}}}
 
@@ -407,7 +409,9 @@ public class VFSFile implements Serializable
 	 */
 	public String getExtendedAttribute(String name)
 	{
-		if(name.equals(VFS.EA_TYPE))
+		if(name.equals(VFS.EA_PATH))
+			return getPath();
+		else if(name.equals(VFS.EA_TYPE))
 		{
 			switch(getType())
 			{
@@ -467,6 +471,7 @@ public class VFSFile implements Serializable
 	} //}}}
 
 	//{{{ toString() method
+	@Override
 	public String toString()
 	{
 		return name;
