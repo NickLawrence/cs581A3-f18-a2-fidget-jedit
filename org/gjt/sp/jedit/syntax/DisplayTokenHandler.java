@@ -22,13 +22,15 @@
 
 package org.gjt.sp.jedit.syntax;
 
-//{{{ Imports
-import javax.swing.text.*;
-import java.awt.font.*;
-import java.util.List;
+import java.awt.font.FontRenderContext;
 import java.text.BreakIterator;
 import java.text.CharacterIterator;
 //}}}
+import java.util.List;
+
+//{{{ Imports
+import javax.swing.text.Segment;
+import javax.swing.text.TabExpander;
 
 /**
  * Creates {@link Chunk} objects that can be painted on screen.
@@ -591,7 +593,7 @@ public class DisplayTokenHandler extends DefaultTokenHandler
 					|| prev > 0x7f || next > 0x7f)
 				// Workarounds for the problem reported at
 				// - SF.net bug #3497312; Unexpected softwrap
-				//   in contracted words with ’ as apostrophe.
+				//   in contracted words with â€™ as apostrophe.
 				// - SF.net bug #3488310; unexpected soft wrap
 				//   happens at closing "&ldquo;".
 				// Probably the cause is in the implementation
@@ -601,12 +603,12 @@ public class DisplayTokenHandler extends DefaultTokenHandler
 				// http://www.google.co.jp/search?q=site%3Abugs.sun.com+BreakIterator+getLineInstance
 				// There seems to be some problems in handling
 				// of quotation marks.
-				&& !(prev == '’'
+//				&& !(prev == 'â€™'
 					// This test excludes CJK characters
 					// which may come after a closing
 					// quote.
 					&& (Character.isLowerCase(next)
-						|| Character.isUpperCase(next)))
+						|| Character.isUpperCase(next))//)
 				&& !isUnacceptableBreakInsideQuote(baseBreak,
 					text, prev, next);
 		}
@@ -635,7 +637,7 @@ public class DisplayTokenHandler extends DefaultTokenHandler
 			// (which don't have such whitespace) where default
 			// behavior of BreakIterator is reasonable.
 			//
-			if ("”’»›".indexOf(prev) >= 0
+			if ("â€�â€™Â»â€º".indexOf(prev) >= 0
 				&& !Character.isWhitespace(next))
 			{
 				int beforeQuote = baseBreak - 2;
@@ -655,7 +657,7 @@ public class DisplayTokenHandler extends DefaultTokenHandler
 				return true;
 			}
 			else if (!Character.isWhitespace(prev)
-					&& "“„‘‚«‹".indexOf(next) >= 0)
+					&& "â€œâ€žâ€˜â€šÂ«â€¹".indexOf(next) >= 0)
 			{
 				int afterQuote = baseBreak + 1;
 				int endIndex = text.getEndIndex();

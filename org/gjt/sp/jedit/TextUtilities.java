@@ -22,10 +22,15 @@
 package org.gjt.sp.jedit;
 
 //{{{ Imports
-import java.util.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.StringTokenizer;
+
 import javax.swing.text.Segment;
+
 import org.gjt.sp.jedit.buffer.JEditBuffer;
-import org.gjt.sp.jedit.syntax.*;
+import org.gjt.sp.jedit.syntax.DefaultTokenHandler;
+import org.gjt.sp.jedit.syntax.Token;
 import org.gjt.sp.util.StandardUtilities;
 //}}}
 
@@ -97,22 +102,22 @@ public class TextUtilities
 		case '}': if (direction != null) direction[0] = false; return '{';
 		case '<': if (direction != null) direction[0] = true;  return '>';
 		case '>': if (direction != null) direction[0] = false; return '<';
-		case '«': if (direction != null) direction[0] = true;  return '»';
-		case '»': if (direction != null) direction[0] = false; return '«';
-		case '‹': if (direction != null) direction[0] = true;  return '›';
-		case '›': if (direction != null) direction[0] = false; return '‹';
-		case '⟨': if (direction != null) direction[0] = true;  return '⟩';
-		case '⟩': if (direction != null) direction[0] = false; return '⟨';
-		case '⌈': if (direction != null) direction[0] = true;  return '⌉';
-		case '⌉': if (direction != null) direction[0] = false; return '⌈';
-		case '⌊': if (direction != null) direction[0] = true;  return '⌋';
-		case '⌋': if (direction != null) direction[0] = false; return '⌊';
-		case '⦇': if (direction != null) direction[0] = true;  return '⦈';
-		case '⦈': if (direction != null) direction[0] = false; return '⦇';
-		case '⟦': if (direction != null) direction[0] = true;  return '⟧';
-		case '⟧': if (direction != null) direction[0] = false; return '⟦';
-		case '⦃': if (direction != null) direction[0] = true;  return '⦄';
-		case '⦄': if (direction != null) direction[0] = false; return '⦃';
+//		case '«': if (direction != null) direction[0] = true;  return '»';
+//		case '»': if (direction != null) direction[0] = false; return '«';
+//		case '‹': if (direction != null) direction[0] = true;  return '›';
+//		case '›': if (direction != null) direction[0] = false; return '‹';
+//		case '⟨': if (direction != null) direction[0] = true;  return '⟩';
+//		case '⟩': if (direction != null) direction[0] = false; return '⟨';
+//		case '⌈': if (direction != null) direction[0] = true;  return '⌉';
+//		case '⌉': if (direction != null) direction[0] = false; return '⌈';
+//		case '⌊': if (direction != null) direction[0] = true;  return '⌋';
+//		case '⌋': if (direction != null) direction[0] = false; return '⌊';
+//		case '⦇': if (direction != null) direction[0] = true;  return '⦈';
+//		case '⦈': if (direction != null) direction[0] = false; return '⦇';
+//		case '⟦': if (direction != null) direction[0] = true;  return '⟧';
+//		case '⟧': if (direction != null) direction[0] = false; return '⟦';
+//		case '⦃': if (direction != null) direction[0] = true;  return '⦄';
+//		case '⦄': if (direction != null) direction[0] = false; return '⦃';
 		default:  return '\0';
 		}
 	} //}}}

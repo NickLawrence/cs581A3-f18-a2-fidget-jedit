@@ -25,11 +25,15 @@ package org.gjt.sp.jedit.io;
 
 //{{{ Imports
 import java.awt.Component;
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
-import org.gjt.sp.jedit.msg.DynamicMenuChanged;
-import org.gjt.sp.jedit.*;
 //}}}
+import org.gjt.sp.jedit.EditBus;
+import org.gjt.sp.jedit.MiscUtilities;
+import org.gjt.sp.jedit.jEdit;
+import org.gjt.sp.jedit.msg.DynamicMenuChanged;
 
 /**
  * A VFS used for remembering frequently-visited directories. Listing it
@@ -236,7 +240,7 @@ public class FavoritesVFS extends VFS
 		Favorite(String path, int type)
 		{
 			super(path,path,PROTOCOL + ':' + path,type, 0L,false);
-			this.label = MiscUtilities.abbreviateView(path);
+			this.label = MiscUtilities.getFileName(path);
 		}
 
 		public String getLabel()
@@ -247,7 +251,7 @@ public class FavoritesVFS extends VFS
 		@Override
 		public String getExtendedAttribute(String name)
 		{
-			if(name.equals(EA_TYPE))
+			if(name.equals(EA_TYPE) || name.equals(EA_PATH))
 				return super.getExtendedAttribute(name);
 			else
 			{

@@ -1,7 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry excluding="test/" kind="src" path=""/>
+	<classpathentry excluding="com/|de/|misc/|test/" kind="src" path=""/>
 	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="lib" path="lib/compile/jsr305.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.8.0_144/lib/tools.jar"/>
+	<classpathentry kind="lib" path="lib/default/jsr305.jar"/>
+	<classpathentry kind="lib" path="lib/ivy/ivy-2.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/jsr305.jar"/>
+	<classpathentry kind="lib" path="lib/sources/hamcrest-library-sources.jar"/>
+	<classpathentry kind="lib" path="lib/sources/jsr305-sources.jar"/>
+	<classpathentry kind="lib" path="lib/sources/junit-dep-sources.jar"/>
+	<classpathentry kind="lib" path="lib/test/hamcrest-core.jar"/>
+	<classpathentry kind="lib" path="lib/test/hamcrest-library.jar"/>
+	<classpathentry kind="lib" path="lib/test/jsr305.jar"/>
+	<classpathentry kind="lib" path="lib/test/junit-dep.jar"/>
+	<classpathentry kind="lib" path="lib/scripting/bcpg-jdk16.jar"/>
+	<classpathentry kind="lib" path="lib/scripting/bcprov-jdk16.jar"/>
+	<classpathentry kind="lib" path="lib/scripting/bsf.jar"/>
+	<classpathentry kind="lib" path="lib/scripting/bsh.jar"/>
+	<classpathentry kind="lib" path="lib/scripting/commons-logging.jar"/>
+	<classpathentry kind="lib" path="lib/fop/avalon-framework-api.jar"/>
+	<classpathentry kind="lib" path="lib/fop/avalon-framework-impl.jar"/>
+	<classpathentry kind="lib" path="lib/fop/batik-anim.jar"/>
+	<classpathentry kind="lib" path="lib/fop/batik-awt-util.jar"/>
+	<classpathentry kind="lib" path="lib/fop/batik-bridge.jar"/>
+	<classpathentry kind="lib" path="lib/fop/batik-css.jar"/>
+	<classpathentry kind="lib" path="lib/fop/batik-dom.jar"/>
+	<classpathentry kind="lib" path="lib/fop/batik-ext.jar"/>
+	<classpathentry kind="lib" path="lib/fop/batik-extension.jar"/>
+	<classpathentry kind="lib" path="lib/fop/batik-gvt.jar"/>
+	<classpathentry kind="lib" path="lib/fop/batik-js.jar"/>
+	<classpathentry kind="lib" path="lib/fop/batik-parser.jar"/>
+	<classpathentry kind="lib" path="lib/fop/batik-script.jar"/>
+	<classpathentry kind="lib" path="lib/fop/batik-svg-dom.jar"/>
+	<classpathentry kind="lib" path="lib/fop/batik-svggen.jar"/>
+	<classpathentry kind="lib" path="lib/fop/batik-transcoder.jar"/>
+	<classpathentry kind="lib" path="lib/fop/batik-util.jar"/>
+	<classpathentry kind="lib" path="lib/fop/batik-xml.jar"/>
+	<classpathentry kind="lib" path="lib/fop/commons-io.jar"/>
+	<classpathentry kind="lib" path="lib/fop/commons-logging.jar"/>
+	<classpathentry kind="lib" path="lib/fop/fop.jar"/>
+	<classpathentry kind="lib" path="lib/fop/xalan.jar"/>
+	<classpathentry kind="lib" path="lib/fop/xml-apis-ext.jar"/>
+	<classpathentry kind="lib" path="lib/fop/xml-apis.jar"/>
+	<classpathentry kind="lib" path="lib/fop/xmlgraphics-commons.jar"/>
+	<classpathentry kind="lib" path="lib/ant-contrib/ant-contrib.jar"/>
+	<classpathentry kind="lib" path="lib/ant-contrib/ant.jar"/>
+	<classpathentry kind="lib" path="lib/launch4j/ant-launcher.jar"/>
+	<classpathentry kind="lib" path="lib/launch4j/ant.jar"/>
+	<classpathentry kind="lib" path="lib/launch4j/commons-beanutils.jar"/>
+	<classpathentry kind="lib" path="lib/launch4j/commons-logging.jar"/>
+	<classpathentry kind="lib" path="lib/launch4j/forms.jar"/>
+	<classpathentry kind="lib" path="lib/launch4j/foxtrot.jar"/>
+	<classpathentry kind="lib" path="lib/launch4j/jgoodies-common.jar"/>
+	<classpathentry kind="lib" path="lib/launch4j/launch4j-core.jar"/>
+	<classpathentry kind="lib" path="lib/launch4j/launch4j-workdir-linux.jar"/>
+	<classpathentry kind="lib" path="lib/launch4j/launch4j-workdir-mac.jar"/>
+	<classpathentry kind="lib" path="lib/launch4j/launch4j-workdir-win32.jar"/>
+	<classpathentry kind="lib" path="lib/launch4j/looks.jar"/>
+	<classpathentry kind="lib" path="lib/launch4j/xmlpull.jar"/>
+	<classpathentry kind="lib" path="lib/launch4j/xpp3_min.jar"/>
+	<classpathentry kind="lib" path="lib/launch4j/xstream.jar"/>
+	<classpathentry kind="lib" path="lib/javadoc/hamcrest-library-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/javadoc/jsr305-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/javadoc/junit-dep-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/docbook/docbook-xsl-resources.zip"/>
+	<classpathentry kind="lib" path="lib/docbook/docbook-xsl-saxon.jar"/>
+	<classpathentry kind="lib" path="lib/docbook/saxon.jar"/>
+	<classpathentry kind="lib" path="lib/docbook/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="lib/docbook/xml-apis.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

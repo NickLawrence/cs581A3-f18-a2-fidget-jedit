@@ -409,8 +409,10 @@ public class VFSFile implements Serializable
 	 */
 	public String getExtendedAttribute(String name)
 	{
-		if(name.equals(VFS.EA_PATH))
-			return getPath();
+		if(name.equals(VFS.EA_PATH)) {
+			System.out.println(path + "----" + MiscUtilities.canonPath(path));
+			return MiscUtilities.canonPath(path);
+		}
 		else if(name.equals(VFS.EA_TYPE))
 		{
 			switch(getType())
