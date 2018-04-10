@@ -23,20 +23,37 @@
 
 package org.gjt.sp.jedit.search;
 
-//{{{ Imports
-import org.gjt.sp.jedit.bsh.*;
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.Frame;
 import java.util.regex.Pattern;
+
 import javax.swing.JOptionPane;
-import org.gjt.sp.jedit.*;
+
+import org.gjt.sp.jedit.BeanShell;
+import org.gjt.sp.jedit.Buffer;
+import org.gjt.sp.jedit.EditBus;
+import org.gjt.sp.jedit.GUIUtilities;
+import org.gjt.sp.jedit.Macros;
+import org.gjt.sp.jedit.TextUtilities;
+import org.gjt.sp.jedit.View;
+import org.gjt.sp.jedit.jEdit;
+//{{{ Imports
+import org.gjt.sp.jedit.bsh.BshMethod;
+import org.gjt.sp.jedit.bsh.NameSpace;
 import org.gjt.sp.jedit.buffer.JEditBuffer;
 import org.gjt.sp.jedit.gui.TextAreaDialog;
 import org.gjt.sp.jedit.msg.PositionChanging;
 import org.gjt.sp.jedit.msg.SearchSettingsChanged;
-import org.gjt.sp.jedit.textarea.*;
+import org.gjt.sp.jedit.textarea.JEditTextArea;
+import org.gjt.sp.jedit.textarea.Selection;
 import org.gjt.sp.jedit.textarea.TextArea;
-import org.gjt.sp.util.*;
 //}}}
+import org.gjt.sp.util.Log;
+import org.gjt.sp.util.ReverseCharSequence;
+import org.gjt.sp.util.StandardUtilities;
+import org.gjt.sp.util.TaskManager;
+import org.gjt.sp.util.ThreadUtilities;
 
 /**
  * Class that implements regular expression and literal search within
@@ -1141,41 +1158,7 @@ loop:		while(path != null)
 		this sucks, so we hack to avoid it. */
 		int start = s.getStart();
 
-		int returnValue;
-
-		if(s instanceof Selection.Range)
-		{
-			returnValue = _replace(view,buffer,matcher,
-				s.getStart(),s.getEnd(),
-				smartCaseReplace);
-
-			textArea.removeFromSelection(s);
-			textArea.addToSelection(new Selection.Range(
-				start,s.getEnd()));
-		}
-		else if(s instanceof Selection.Rect)
-		{
-			Selection.Rect rect = (Selection.Rect)s;
-			int startCol = rect.getStartColumn(
-				buffer);
-			int endCol = rect.getEndColumn(
-				buffer);
-
-			returnValue = 0;
-			for(int j = s.getStartLine(); j <= s.getEndLine(); j++)
-			{
-				returnValue += _replace(view,buffer,matcher,
-					getColumnOnOtherLine(buffer,j,startCol),
-					getColumnOnOtherLine(buffer,j,endCol),
-					smartCaseReplace);
-			}
-			textArea.addToSelection(new Selection.Rect(
-				start,s.getEnd()));
-		}
-		else
-			throw new RuntimeException("Unsupported: " + s);
-
-		return returnValue;
+		return s.replaceInSelection(buffer, view, matcher, smartCaseReplace, textArea, start);
 	} //}}}
 
 	//{{{ _replace() method
@@ -1190,7 +1173,7 @@ loop:		while(path != null)
 	 * @param smartCaseReplace See user's guide
 	 * @return The number of occurrences replaced
 	 */
-	private static int _replace(View view, JEditBuffer buffer,
+	public static int _replace(View view, JEditBuffer buffer,
 		SearchMatcher matcher, int start, int end,
 		boolean smartCaseReplace)
 		throws Exception
@@ -1437,7 +1420,7 @@ loop:	for(int counter = 0; ; counter++)
 	/**
 	 * Should be somewhere else...
 	 */
-	private static int getColumnOnOtherLine(Buffer buffer, int line,
+	public static int getColumnOnOtherLine(Buffer buffer, int line,
 		int col)
 	{
 		int returnValue = buffer.getOffsetOfVirtualColumn(

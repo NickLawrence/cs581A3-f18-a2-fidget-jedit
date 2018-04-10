@@ -26,7 +26,11 @@ package org.gjt.sp.jedit.textarea;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gjt.sp.jedit.Buffer;
+import org.gjt.sp.jedit.View;
 import org.gjt.sp.jedit.buffer.JEditBuffer;
+import org.gjt.sp.jedit.search.SearchAndReplace;
+import org.gjt.sp.jedit.search.SearchMatcher;
 import org.gjt.sp.util.StandardUtilities;
 //}}}
 
@@ -344,6 +348,16 @@ public abstract class Selection implements Cloneable
 			return changed;
 		} //}}}
 
+		@Override
+		public int replaceInSelection(Buffer buffer, View view, SearchMatcher matcher,
+				boolean smartCaseReplace, TextArea textArea, int start) throws Exception {
+			int returnValue = SearchAndReplace._replace(view, buffer, matcher, this.getStart(), this.getEnd(),
+					smartCaseReplace);
+			textArea.removeFromSelection(this);
+			textArea.addToSelection(new Selection.Range(start, this.getEnd()));
+			return returnValue;
+		}
+
 		//}}}
 	} //}}}
 
@@ -503,7 +517,7 @@ public abstract class Selection implements Cloneable
 			int maxWidth = 0;
 			int totalLines = 0;
 			/** This list will contains Strings and Integer. */
-			List<Object> lines = new ArrayList<Object>();
+			List<Object> lines = new ArrayList<>();
 
 			//{{{ Split the text into lines
 			if(text != null)
@@ -762,6 +776,24 @@ public abstract class Selection implements Cloneable
 				return buffer.getLineStartOffset(line) + returnValue;
 		} //}}}
 
+		@Override
+		public int replaceInSelection(Buffer buffer, View view, SearchMatcher matcher,
+				boolean smartCaseReplace, TextArea textArea, int start) throws Exception {
+			int startCol = this.getStartColumn(buffer);
+			int endCol = this.getEndColumn(buffer);
+			int returnValue = 0;
+			for (int j = this.getStartLine(); j <= this.getEndLine(); j++) {
+				returnValue += SearchAndReplace._replace(view, buffer, matcher,
+						SearchAndReplace.getColumnOnOtherLine(buffer, j, startCol),
+						SearchAndReplace.getColumnOnOtherLine(buffer, j, endCol), smartCaseReplace);
+			}
+			textArea.addToSelection(new Selection.Rect(start, this.getEnd()));
+			return returnValue;
+		}
+
 		//}}}
 	} //}}}
+
+	public abstract int replaceInSelection(Buffer buffer, View view, SearchMatcher matcher,
+			boolean smartCaseReplace, TextArea textArea, int start) throws Exception;
 }
