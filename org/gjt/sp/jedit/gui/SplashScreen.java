@@ -20,9 +20,24 @@
 
 package org.gjt.sp.jedit.gui;
 
+import java.awt.AlphaComposite;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.Rectangle;
+
 //{{{ Imports
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JComponent;
+import javax.swing.JWindow;
 
 import org.gjt.sp.jedit.jEdit;
 import org.gjt.sp.util.Log;
@@ -39,7 +54,7 @@ public class SplashScreen extends JComponent
 	public SplashScreen()
 	{
 		realSplash = java.awt.SplashScreen.getSplashScreen();
-		fm = getFontMetrics(labelFont);
+		fm = getFontMetrics(versionLabel.getLabelFont());
 		if(realSplash == null)
 		{
 			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -232,7 +247,7 @@ public class SplashScreen extends JComponent
 			int drawOffsetY = size.height - 2 - PROGRESS_HEIGHT
 					+ (PROGRESS_HEIGHT + fm.getAscent() + fm.getDescent()) / 2;
 
-			paintString(g, label, drawOffsetX, drawOffsetY);
+			versionLabel.paintString(g, label, drawOffsetX, drawOffsetY);
 		}
 
 		String version = "version " + jEdit.getVersion();
@@ -240,24 +255,12 @@ public class SplashScreen extends JComponent
 		int drawOffsetX = (size.width / 2) - (fm.stringWidth(version) / 2);
 		int drawOffsetY = size.height - PROGRESS_HEIGHT - fm.getDescent() - 3;
 
-		paintString(g, version, drawOffsetX, drawOffsetY);
+		versionLabel.paintString(g, version, drawOffsetX, drawOffsetY);
 
-	} //}}}
-
-	//{{{ paintString() method
-	private void paintString(Graphics g, String version, int drawOffsetX,
-				 int drawOffsetY)
-	{
-		g.setFont( labelFont );
-
-		g.setColor( versionColor1 );
-		g.drawString( version, drawOffsetX, drawOffsetY );
-		// Draw a highlight effect
-		g.setColor( versionColor2 );
-		g.drawString( version, drawOffsetX + 1, drawOffsetY + 1 );
 	} //}}}
 
 	//{{{ private members
+	private VersionLabel versionLabel = new VersionLabel();
 	private final FontMetrics fm;
 	private final JWindow win;
 	private final Image image;
@@ -268,9 +271,6 @@ public class SplashScreen extends JComponent
 	private String lastLabel;
 	private long firstAdvanceTime = System.currentTimeMillis();
 	private long lastAdvanceTime = System.currentTimeMillis();
-	private Font labelFont = UIManager.getFont("Label.font").deriveFont(9.8f);
-	private Color versionColor1 = new Color(55, 55, 55);
-	private Color versionColor2 = new Color(255, 255, 255, 50);
 	private java.awt.SplashScreen realSplash;
 	//}}}
 }
