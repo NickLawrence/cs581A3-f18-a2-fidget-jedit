@@ -212,7 +212,7 @@ public class DockingLayoutManager implements EBComponent
 			return;
 		if (! canChangeEditMode(message))
 			return;
-		String newMode = getCurrentEditMode(view);
+		String newMode = view.getCurrentEditMode();
 		String mode = currentMode.get(view);
 		boolean sameMode =
 			(mode == null && newMode == null) ||
@@ -226,17 +226,6 @@ public class DockingLayoutManager implements EBComponent
 			currentMode.put(view, newMode);
 			loadModeLayout(view, newMode);
 		}
-	}
-
-	private String getCurrentEditMode(View view)
-	{
-		Buffer buffer = view.getBuffer();
-		if (buffer == null)
-			return null;
-		Mode bufferMode = buffer.getMode();
-		if (bufferMode == null)
-			return null;
-		return bufferMode.getName();
 	}
 
 	private static final String GLOBAL_MODE = "DEFAULT";
@@ -261,7 +250,7 @@ public class DockingLayoutManager implements EBComponent
 	{
 		if (view == null)
 			return;
-		String mode = instance.getCurrentEditMode(view);
+		String mode = view.getCurrentEditMode();
 		instance.loadModeLayout(view, mode);
 	}
 
@@ -269,7 +258,7 @@ public class DockingLayoutManager implements EBComponent
 	{
 		if (view == null)
 			return;
-		String mode = instance.getCurrentEditMode(view);
+		String mode = view.getCurrentEditMode();
 		instance.saveModeLayout(view, mode);
 	}
 
